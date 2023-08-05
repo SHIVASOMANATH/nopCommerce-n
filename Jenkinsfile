@@ -30,7 +30,7 @@ pipeline {
         }
         stage ('ZIP') {
              steps {
-                zipFile : 'nopCommerce.zip'
+                archive : 'nopCommerce.zip'
             }
         }
     }
