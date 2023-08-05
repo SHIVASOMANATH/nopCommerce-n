@@ -25,8 +25,8 @@ pipeline {
         }
         stage ('Creating folders') {
              steps {
-                sh script: 'mkdir publish/bin publish/logs',
-                           'zip -r nopCommerce.zip publish'
+                sh script: 'mkdir publish/bin publish/logs \n
+                            zip -r nopCommerce.zip publish'
                      }
         }
     }
