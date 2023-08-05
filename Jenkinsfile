@@ -26,10 +26,6 @@ pipeline {
         stage ('Creating folders') {
              steps {
                 sh script: 'mkdir publish/bin publish/logs && zip -r nopCommerce.zip publish'
-            }
-        }
-        stage ('ZIP') {
-             steps {
                 archive : '**/nopCommerce.zip'
             }
         }
