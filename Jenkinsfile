@@ -19,8 +19,15 @@ pipeline {
         stage ('Build and Package') {
              steps {
                  sh script: '''dotnet restore src/NopCommerce.sln \n
-                             dotnet build -c Release src/NopCommerce.sln'''
+                             dotnet build -c Release src/NopCommerce.sln \n
+                             dotnet publish -c Release src/Presentation/Nop.Web.csproj -o publish '''
             }     
+        }
+        stage ('Creating folders') {
+             steps {
+                sh script: 'mkdir publish/bin publish/logs',
+                           'zip -r nopCommerce.zip publish'
+                     }
         }
     }
 } 
