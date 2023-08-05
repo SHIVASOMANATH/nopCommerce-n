@@ -25,12 +25,12 @@ pipeline {
         }
         stage ('Creating folders') {
              steps {
-                sh script: 'mkdir publish/bin publish/logs '
+                sh script: 'mkdir publish/bin publish/logs'
             }
         }
         stage ('ZIP') {
              steps {
-                zipFile : 'nopCommerce.zip publish'
+                zipFile : 'nopCommerce.zip'
             }
         }
     }
