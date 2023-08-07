@@ -1,0 +1,59 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy-check
+  labels:
+    app: NopCommerce
+spec:
+  minReadySeconds: 5
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nopcommerce
+    strategy:
+      rollingUpdate:
+        maxSurge: 50%
+        maxUnavailable: 50%
+        maxUnavailable: 50%
+    template:
+      metadata:
+        name: nopcommerce
+        lables: 
+          app: nopcommerce
+          ver: "2.0"
+      spec:
+        containers:
+          - name: shivasomanath/nop
+            image: shivasomanath/nop:2.0
+            ports:
+              - containerPort: 5000
+            livenessProbe:
+              httpGet:
+                path: /
+                port: 5000
+            readinessProbe:
+              httpGet:
+                path: /
+                port: 5000
+            resource:
+              requests:
+                memory: "512Mi"
+                cpu: "500m"
+              limits:
+                memory: "2048Mi"
+                cpu: "1000m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nopcommerce-svc
+spec:
+  selector:
+    app: nopcommerce
+  ports:
+    - name: nopcommerce
+      port: 5000
+      targetPort: 5000
+      protocol: TCP
+  type: LoadBalancer

@@ -22,6 +22,12 @@ pipeline {
                 sh 'docker image build -t shivasomanath/nop:2.0 .'
                 sh 'docker image push shivasomanath/nop:2.0' 
             }
-        } 
+        }
+        stage('deploy') {
+            steps {
+                sh 'cd deploy && terraform init && terraform apply -auto-approve && kubectl apply -f ../k8s/nop-deploy.yaml' 
+                //sh 'echo "$(terraform output kube_config)" > ./azurek8s && export KUBECONFIG=./azurek8s && kubectl apply -f ../k8s/nop-deploy.yaml'
+            }
+        }    
     }
 }
