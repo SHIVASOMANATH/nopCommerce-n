@@ -15,28 +15,13 @@ pipeline {
                 git url: 'https://github.com/SHIVASOMANATH/nopCommerce-n.git',
                     branch: 'develop'
             }
-        }
-        stage ('Build and Package') {
-             steps {
-                sh 'dotnet restore src/NopCommerce.sln'
-                sh 'dotnet build -c Release src/NopCommerce.sln'
-                sh 'dotnet publish -c Release src/Presentation/Nop.Web/Nop.Web.csproj -o publish'
-                sh 'mkdir publish/bin publish/logs && zip -r nopCommerce.zip publish'
-                archive '**/nopCommerce.zip'
-             }
-        }
-     //   stage ('Build and Package') {
-     //        steps {
-     //            sh script: '''dotnet restore src/NopCommerce.sln \n
-     //                        dotnet build -c Release src/NopCommerce.sln \n
-     //                        dotnet publish -c Release src/Presentation/Nop.Web.csproj -o publish '''
-     //       }     
-     //   }
-     //   stage ('Creating folders') {
-     //        steps {
-     //           sh script: 'mkdir publish/bin publish/logs && zip -r nopCommerce.zip publish'
-     //           archive : '**/nopCommerce.zip'
-     //       }
-     //   }
+        }       
+        stage ('Build') {
+            steps {
+                sh 'cd /home/jenkins/workspace/NopCommercedocker'
+                sh 'docker image build -t shivasomanath/nop:2.0 .'
+                sh 'docker image push shivasomanath/nop:2.0' 
+            }
+        } 
     }
-} 
+}
