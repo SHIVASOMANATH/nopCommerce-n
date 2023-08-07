@@ -1,5 +1,5 @@
 terraform {
-  required_version = ">=1.0"
+  required_version = ">=3.0"
 
   required_providers {
     azapi = {
@@ -18,5 +18,14 @@ terraform {
       source  = "hashicorp/time"
       version = "0.9.1"
     }
+  }
+  backend "azurerm" {
+    resource_group_name  = "terraform"
+    storage_account_name = "qttfstate"
+    container_name       = "tfstates"
+    key                  = "nopcommerce.tfstate"
+  }
+  provider "azurerm" {
+  features {}
   }
 }
