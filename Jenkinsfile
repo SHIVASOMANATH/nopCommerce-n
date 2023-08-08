@@ -25,8 +25,8 @@ pipeline {
         }
         stage('deploy') {
             steps {
-                sh 'cd /home/jenkins/workspace/FleaCommerce/Terraform && terraform init && terraform fmt && terraform apply -auto-approve ' 
-                sh 'echo "$(terraform output kube_config)" > ./azurek8s && export KUBECONFIG=./azurek8s && kubectl apply -f ./home/jenkins/workspace/FleaCommerce/K8S/NopDeploy.yaml'
+                sh 'cd /home/jenkins/workspace/FleaCommerce/Terraform && terraform init && terraform fmt && terraform apply -auto-approve && kubectl apply -f ./home/jenkins/workspace/FleaCommerce/K8S/NopDeploy.yaml' 
+                //sh 'echo "$(terraform output kube_config)" > ./azurek8s && export KUBECONFIG=./azurek8s && kubectl apply -f ../k8s/nop-deploy.yaml'
             }
         }    
     }
