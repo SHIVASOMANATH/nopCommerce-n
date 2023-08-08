@@ -14,12 +14,12 @@ resource "azurerm_storage_account" "maneesha" {
   account_tier             = "Standard"
   account_replication_type = "GRS"
 }
-resource "azurerm_ssh_public_key" "maina" {
-  name                = "maina"
-  resource_group_name = "terraform"
-  location            = azurerm_resource_group.terraform.location
-  public_key          = file("~/.ssh/id_rsa.pub")
-}
+// resource "azurerm_ssh_public_key" "maina" {
+//   name                = "maina"
+//   resource_group_name = "terraform"
+//   location            = azurerm_resource_group.terraform.location
+//   public_key          = file("~/.ssh/id_rsa.pub")
+// }
 
 resource "azurerm_kubernetes_cluster" "somanath" {
   name                = "somanath"
