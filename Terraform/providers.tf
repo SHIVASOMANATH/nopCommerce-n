@@ -25,7 +25,8 @@ terraform {
     container_name       = "tfstates"
     key                  = "nopcommerce.tfstate"
   }
-  provider "azurerm" {
+}
+
+provider "azurerm" {
   features {}
-  }
 }
