@@ -25,6 +25,7 @@ resource "azurerm_kubernetes_cluster" "somanath" {
   name                = "somanath"
   location            = azurerm_resource_group.terraform.location
   resource_group_name = azurerm_resource_group.terraform.name
+  dns_prefix          = "shiva"
 
   default_node_pool {
     name       = "mania"
