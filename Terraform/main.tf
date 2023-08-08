@@ -3,13 +3,21 @@ resource "random_pet" "rg_name" {
   prefix = var.resource_group_name_prefix
 }
 
-resource "azurerm_resource_group" "rg" {
-  location = var.resource_group_location
-  name     = random_pet.rg_name.id
+resource "azurerm_resource_group" "terraform" {
+  location = "eastus"
+  name     = "terraform"
 }
 
 resource "random_pet" "azurerm_kubernetes_cluster_name" {
   prefix = "cluster"
+}
+
+resource "azurerm_storage_account" "qttfstate" {
+  name                     = "qttfstate"
+  resource_group_name      = azurerm_resource_group.terraform.name
+  location                 = azurerm_resource_group.terraform.location
+  account_tier             = "Standard"
+  account_replication_type = "GRS"
 }
 
 resource "random_pet" "azurerm_kubernetes_cluster_dns_prefix" {
@@ -17,9 +25,9 @@ resource "random_pet" "azurerm_kubernetes_cluster_dns_prefix" {
 }
 
 resource "azurerm_kubernetes_cluster" "k8s" {
-  location            = azurerm_resource_group.rg.location
+  location            = azurerm_resource_group.terraform.location
   name                = random_pet.azurerm_kubernetes_cluster_name.id
-  resource_group_name = azurerm_resource_group.rg.name
+  resource_group_name = azurerm_resource_group.terraform.name
   dns_prefix          = random_pet.azurerm_kubernetes_cluster_dns_prefix.id
 
   identity {
