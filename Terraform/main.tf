@@ -12,6 +12,10 @@ resource "random_pet" "azurerm_kubernetes_cluster_name" {
   prefix = "cluster"
 }
 
+resource "random_pet" "azurerm_kubernetes_cluster_dns_prefix" {
+  prefix = "dns"
+}
+
 resource "azurerm_storage_account" "qttfstate" {
   name                     = "qttfstate"
   resource_group_name      = azurerm_resource_group.terraform.name
@@ -20,13 +24,15 @@ resource "azurerm_storage_account" "qttfstate" {
   account_replication_type = "GRS"
 }
 
-resource "random_pet" "azurerm_kubernetes_cluster_dns_prefix" {
-  prefix = "dns"
-}
-
-resource "azurerm_kubernetes_cluster" "k8s" {
+resource "azurerm_ssh_public_key" "nopcommerce.tfstate" {
+  name                = "nopcommerce.tfstate"
+  resource_group_name = azurerm_resource_group.terraform.name
   location            = azurerm_resource_group.terraform.location
-  name                = random_pet.azurerm_kubernetes_cluster_name.id
+  public_key          = file("~/.ssh/id_rsa.pub")
+}
+resource "azurerm_kubernetes_cluster" "terraform" {
+  location            = azurerm_resource_group.terraform.location
+  name                = terraform
   resource_group_name = azurerm_resource_group.terraform.name
   dns_prefix          = random_pet.azurerm_kubernetes_cluster_dns_prefix.id
 
@@ -37,10 +43,10 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   default_node_pool {
     name       = "agentpool"
     vm_size    = "Standard_D2_v2"
-    node_count = var.node_count
+    node_count = 2
   }
   linux_profile {
-    admin_username = var.username
+    admin_username = "terraform"
 
     ssh_key {
       key_data = jsondecode(azapi_resource_action.ssh_public_key_gen.output).publicKey
