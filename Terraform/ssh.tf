@@ -1,4 +1,4 @@
-resource "random_pet" "ssh_key_name" {
+resource "random_pet" "nopcommerce.tfstate" {
   prefix    = "ssh"
   separator = ""
 }

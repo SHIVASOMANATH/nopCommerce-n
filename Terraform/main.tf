@@ -1,5 +1,5 @@
 # Generate random resource group name
-resource "random_pet" "rg_name" {
+resource "random_pet" "terraform" {
   prefix = var.resource_group_name_prefix
 }
 
