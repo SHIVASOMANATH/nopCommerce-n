@@ -24,12 +24,12 @@ resource "azurerm_storage_account" "qttfstate" {
   account_replication_type = "GRS"
 }
 
-resource "azurerm_ssh_public_key" "nopcommerce.tfstate" {
-  name                = "nopcommerce.tfstate"
-  resource_group_name = azurerm_resource_group.terraform.name
-  location            = azurerm_resource_group.terraform.location
-  public_key          = file("~/.ssh/id_rsa.pub")
-}
+// resource "azurerm_ssh_public_key" "nopcommerce.tfstate" {
+//   name                = "nopcommerce.tfstate"
+//   resource_group_name = azurerm_resource_group.terraform.name
+//   location            = azurerm_resource_group.terraform.location
+//   public_key          = file("~/.ssh/id_rsa.pub")
+// }
 resource "azurerm_kubernetes_cluster" "terraform" {
   location            = azurerm_resource_group.terraform.location
   name                = terraform
