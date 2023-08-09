@@ -7,13 +7,6 @@ resource "azurerm_resource_group" "terraform" {
   location = "eastus"
 }
 
-resource "azurerm_storage_account" "maneesha" {
-  name                     = "maneesha"
-  resource_group_name      = azurerm_resource_group.terraform.name
-  location                 = azurerm_resource_group.terraform.location
-  account_tier             = "Standard"
-  account_replication_type = "GRS"
-}
 resource "azurerm_kubernetes_cluster" "somanath" {
   name                = "somanath"
   location            = azurerm_resource_group.terraform.location
@@ -44,10 +37,4 @@ output "kube_config" {
   value = azurerm_kubernetes_cluster.somanath.kube_config_raw
 
   sensitive = true
-}
-terraform {
-  backend "azurerm" {
-    resource_group_name  = "terraform"
-    storage_account_name = "maneesha"
-  }
 }
