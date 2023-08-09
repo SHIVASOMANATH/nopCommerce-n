@@ -3,7 +3,7 @@ provider "azurerm" {
   }
 }
 resource "azurerm_resource_group" "terraform" {
-  name     = "terraform"
+  name     = "terraform1"
   location = "eastus"
 }
 
@@ -15,8 +15,8 @@ resource "azurerm_kubernetes_cluster" "somanath" {
 
   default_node_pool {
     name       = "mania"
-    node_count = 2
-    vm_size    = "Standard_D2_v2"
+    node_count = 1
+    vm_size    = "Standard_B2ms"
   }
 
   identity {
